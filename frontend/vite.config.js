@@ -7,4 +7,10 @@ export default defineConfig({
     port: 5173,
     strictPort: false,
   },
+  preview: {
+    host: "0.0.0.0",
+    allowedHosts: [
+      "resilient-unity-production-db61.up.railway.app"
+    ],
+  },
 });
