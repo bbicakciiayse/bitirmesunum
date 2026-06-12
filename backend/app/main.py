@@ -6,17 +6,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, payment, upload, train, predict, sensitivity, dashboard
 
 
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
-
-# Local development + Railway frontend origins
-_cors_origins = list({
-    FRONTEND_ORIGIN,
-    FRONTEND_ORIGIN.replace("localhost", "127.0.0.1"),
-    FRONTEND_ORIGIN.replace("127.0.0.1", "localhost"),
-    "https://resilient-unity-production-db61.up.railway.app",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-})
+FRONTEND_ORIGIN = os.getenv(
+    "FRONTEND_ORIGIN",
+    "https://resilient-unity-production-db61.up.railway.app"
+)
 
 app = FastAPI(
     title="Pricing Intelligence API",
@@ -24,10 +17,14 @@ app = FastAPI(
     description="B2B sales win-probability and pricing intelligence backend.",
 )
 
-# For demo/deployment safety: allow requests from frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://resilient-unity-production-db61.up.railway.app",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        FRONTEND_ORIGIN,
+    ],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
