@@ -5,14 +5,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import auth, payment, upload, train, predict, sensitivity, dashboard
 
+
 FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
 
-# Allow both localhost and 127.0.0.1 variants so the browser doesn't block
-# health-check or upload requests regardless of which loopback hostname Vite used.
+# Local development + Railway frontend origins
 _cors_origins = list({
     FRONTEND_ORIGIN,
     FRONTEND_ORIGIN.replace("localhost", "127.0.0.1"),
     FRONTEND_ORIGIN.replace("127.0.0.1", "localhost"),
+    "https://resilient-unity-production-db61.up.railway.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 })
 
 app = FastAPI(
@@ -21,6 +24,7 @@ app = FastAPI(
     description="B2B sales win-probability and pricing intelligence backend.",
 )
 
+# For demo/deployment safety: allow requests from frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -29,13 +33,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router,        prefix="/auth",       tags=["Auth"])
-app.include_router(payment.router,     prefix="/payment",    tags=["Payment"])
-app.include_router(upload.router,                            tags=["Data"])
-app.include_router(train.router,                             tags=["Training"])
-app.include_router(predict.router,                           tags=["Prediction"])
-app.include_router(sensitivity.router,                       tags=["Sensitivity"])
-app.include_router(dashboard.router,                         tags=["Dashboard"])
+app.include_router(auth.router, prefix="/auth", tags=["Auth"])
+app.include_router(payment.router, prefix="/payment", tags=["Payment"])
+app.include_router(upload.router, tags=["Data"])
+app.include_router(train.router, tags=["Training"])
+app.include_router(predict.router, tags=["Prediction"])
+app.include_router(sensitivity.router, tags=["Sensitivity"])
+app.include_router(dashboard.router, tags=["Dashboard"])
+
+
+@app.get("/", tags=["Root"])
+def root():
+    return {"status": "ok", "message": "Winsight backend is running"}
 
 
 @app.get("/health", tags=["Health"])
