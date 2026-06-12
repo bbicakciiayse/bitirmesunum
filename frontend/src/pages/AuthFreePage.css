@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════════════
+   AuthFreePage.css  —  Winsight "Get Started Free"
+   Clean white SaaS onboarding style
+═══════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ════════════════════════════════════════════
+   PAGE
+════════════════════════════════════════════ */
+.af-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  color: #1a1f2e;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Logo — inside the centered card ── */
+.af-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.25rem;
+}
+
+.af-logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #1a1f2e;
+  user-select: none;
+  cursor: default;
+}
+.af-accent { color: #3b82f6; }
+
+/* ════════════════════════════════════════════
+   MAIN  —  centered card area
+════════════════════════════════════════════ */
+.af-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem 3rem;
+}
+
+.af-card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ── Heading ── */
+.af-title {
+  font-size: 1.82rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: #1a1f2e;
+  line-height: 1.15;
+  margin-bottom: 0.45rem;
+  text-align: center;
+}
+
+/* ── Subtitle ── */
+.af-sub {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.55;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* ════════════════════════════════════════════
+   FORM
+════════════════════════════════════════════ */
+.af-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.af-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.af-input {
+  width: 100%;
+  padding: 0.78rem 1rem;
+  font-size: 0.94rem;
+  font-family: inherit;
+  color: #1a1f2e;
+  background: #ffffff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.af-input::placeholder { color: #9ca3af; }
+.af-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+.af-input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Error message */
+.af-error-msg {
+  font-size: 0.785rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+/* ── Submit button ── */
+.af-btn {
+  width: 100%;
+  padding: 0.82rem 1rem;
+  background: #3b82f6;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.94rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s, opacity 0.15s;
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.3);
+}
+.af-btn:hover:not(:disabled) {
+  background: #2563eb;
+  box-shadow: 0 4px 18px rgba(59, 130, 246, 0.42);
+}
+.af-btn:active:not(:disabled) { transform: scale(0.98); }
+.af-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ════════════════════════════════════════════
+   LEGAL COPY
+════════════════════════════════════════════ */
+.af-legal {
+  font-size: 0.77rem;
+  color: #9ca3af;
+  line-height: 1.65;
+  text-align: center;
+  padding: 0 0.25rem;
+}
+
+.af-legal-link {
+  color: #6b7280;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+.af-legal-link:hover { color: #3b82f6; }
+
+/* ── Sign-in line — sits directly under legal text ── */
+.af-have-account {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+  margin-top: 0.9rem;
+}
+
+.af-signin-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  color: #3b82f6;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.af-signin-link:hover { color: #2563eb; }
+
+/* ════════════════════════════════════════════
+   VERIFY STEP — additional elements
+════════════════════════════════════════════ */
+
+/* Large spaced code input */
+.af-code-input {
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  text-align: center;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+}
+
+/* Dim hint text below the code field */
+.af-helper-text {
+  font-size: 0.775rem;
+  color: #9ca3af;
+  margin-top: 0.1rem;
+}
+
+/* Email address shown in verify subtitle */
+.af-email-display {
+  font-weight: 600;
+  color: #374151;
+  word-break: break-all;
+}
+
+/* ════════════════════════════════════════════
+   STEP 3 — Account information card
+════════════════════════════════════════════ */
+
+/* Wider card, border + shadow + rounded corners, clip the deco strip */
+.af-card-info {
+  max-width: 480px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.07),
+    0 1px 4px  rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+/* Gradient accent strip at the very top */
+.af-info-deco {
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6 0%, #93c5fd 100%);
+  flex-shrink: 0;
+}
+
+/* Padded inner body */
+.af-info-content {
+  padding: 2rem 2.25rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tighter heading + sub spacing inside the card */
+.af-title-info { margin-bottom: 0.38rem; }
+.af-sub-info   { margin-bottom: 1.75rem; }
+
+/* Info form — slightly wider gaps, no bottom margin */
+.af-form-info { gap: 1.1rem; margin-bottom: 0; }
+
+/* 2-column grid: Name | Role */
+.af-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Field label */
+.af-info-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.32rem;
+}
+
+/* Select wrapper — holds the custom chevron */
+.af-select-wrap { position: relative; }
+.af-select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0; height: 0;
+  border-left: 4.5px solid transparent;
+  border-right: 4.5px solid transparent;
+  border-top: 5px solid #9ca3af;
+  pointer-events: none;
+}
+
+/* Styled select — matches af-input, hides native arrow */
+.af-select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 2.5rem;
+}
+
+/* Gray text while placeholder option is active */
+.af-select-empty { color: #9ca3af; }
+
+/* "Create my account" gets a little breathing room above */
+.af-btn-create { margin-top: 0.35rem; }
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+
+/* Stack 2-col grid early on narrow screens */
+@media (max-width: 600px) {
+  .af-info-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .af-title { font-size: 1.55rem; }
+  .af-card  { max-width: 100%; }
+  .af-main  { padding: 1.5rem 1.25rem 2rem; }
+  .af-card-info   { max-width: 100%; border-radius: 0; border-left: none; border-right: none; }
+  .af-info-content { padding: 1.75rem 1.5rem 2rem; }
+}
