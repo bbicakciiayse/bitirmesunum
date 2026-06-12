@@ -240,3 +240,22 @@ def build_prediction_scenario(user_inputs,selected_features,base_scenario,engine
             except (TypeError,ValueError): pass
         scenario[col]=str(val)
     return scenario
+
+def build_fast_pipeline(selected_features: List[str], X: pd.DataFrame) -> Pipeline:
+    """
+    Fast production training pipeline — no grid search, no nested CV.
+    Lasso LogisticRegression with C=1.0, fixed hyperparameters.
+    Completes in seconds instead of minutes.
+    """
+    numerical_cols = [c for c in selected_features if pd.api.types.is_numeric_dtype(X[c])]
+    categorical_cols = [c for c in selected_features if c not in numerical_cols]
+    preprocessor = create_preprocessor(numerical_cols, categorical_cols, scale_numerical=True)
+    lasso = LogisticRegression(
+        penalty="l1",
+        solver="liblinear",
+        C=1.0,
+        random_state=RANDOM_STATE,
+        class_weight="balanced",
+        max_iter=5000,
+    )
+    return Pipeline([("preprocessor", preprocessor), ("classifier", lasso)])
