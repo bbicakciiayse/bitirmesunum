@@ -29,13 +29,27 @@ from typing import Any
 #   └── parent: app/
 #   └── parent: backend/
 #   └── parent: project root  → Untitled37.ipynb
-_NOTEBOOK_PATH: Path = (
-    Path(__file__).resolve()
-    .parent   # services/
-    .parent   # app/
-    .parent   # backend/
-    .parent   # project root (btpcode/)
-    / "Untitled37.ipynb"
+from pathlib import Path
+
+_BASE_DIR = Path(__file__).resolve()
+
+_NOTEBOOK_CANDIDATES = [
+    # Railway backend root olduğunda: /app/Untitled37.ipynb
+    _BASE_DIR.parents[2] / "Untitled37.ipynb",
+
+    # Local / fallback
+    Path.cwd() / "Untitled37.ipynb",
+
+    # Repo root ihtimali
+    _BASE_DIR.parents[3] / "Untitled37.ipynb",
+
+    # Backend klasörü içinde ihtimal
+    _BASE_DIR.parents[2] / "backend" / "Untitled37.ipynb",
+]
+
+_NOTEBOOK_PATH = next(
+    (p for p in _NOTEBOOK_CANDIDATES if p.exists()),
+    _NOTEBOOK_CANDIDATES[0],
 )
 
 # ── Namespace that holds every object exec'd from the notebook ─────────────────
