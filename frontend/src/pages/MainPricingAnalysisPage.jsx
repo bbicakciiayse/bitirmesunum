@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./MainPricingAnalysisPage.css"
 
-const API = import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000"
+const API = (import.meta.env.VITE_API_URL || "http://127.0.0.1:8000").replace(/\/$/, "")"
 
 // ── SVG chart constants ───────────────────────────────────────
 const CVW = 340, CVH = 140
@@ -64,15 +64,24 @@ export default function MainPricingAnalysisPage() {
     console.log("Health check URL:", healthUrl)
     // no-cors skips the CORS preflight entirely — the fetch resolves if the
     // server is reachable and rejects only on a true network failure.
-    fetch(healthUrl, { mode: "no-cors" })
-      .then((r) => {
-        console.log("Health check success:", r.status)
-        setBackendOk(true)
-      })
-      .catch((err) => {
-        console.log("Health check failed:", err.message)
-        setBackendOk(false)
-      })
+    fetch(healthUrl, {
+  method: "GET",
+  mode: "cors",
+})
+  .then((r) => {
+    if (!r.ok) {
+      throw new Error(`Health check failed with status ${r.status}`)
+    }
+    return r.json()
+  })
+  .then((data) => {
+    console.log("Health check success:", data)
+    setBackendOk(true)
+  })
+  .catch((err) => {
+    console.log("Health check failed:", err.message)
+    setBackendOk(false)
+  })
   }, [])
 
   // ── Stage ─────────────────────────────────────────────────
@@ -145,10 +154,14 @@ export default function MainPricingAnalysisPage() {
       // Do NOT set Content-Type manually — browser sets multipart/form-data + boundary automatically
       let res
       try {
-        res = await fetch(`${API}/upload-data`, { method: "POST", body: fd })
+        res = await fetch(`${API}/upload-data`, {
+  method: "POST",
+  mode: "cors",
+  body: fd,
+})
       } catch (networkErr) {
         // fetch() itself threw — backend is not reachable at all
-        throw new Error(`Backend is not reachable at ${API}`)
+        throw new Error(`Upload request failed. Backend URL: ${API}. Error: ${networkErr.message}`)
       }
 
       let json
